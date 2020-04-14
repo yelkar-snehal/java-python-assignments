@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class SwapWithTemp {
-	
+
 	public static void main(String[] args) throws NumberFormatException, IOException {
 
 		int no1, no2;
