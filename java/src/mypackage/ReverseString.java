@@ -7,8 +7,7 @@ import java.io.InputStreamReader;
 public class ReverseString {
 
     public static String RevString(String str) {
-    	//avoiding swap logic to reduce space complexity
-    	
+        // avoiding swap logic to reduce space complexity
         String reversed = "";
 
         for (int i = str.length() - 1; 0 <= i; i--) {
