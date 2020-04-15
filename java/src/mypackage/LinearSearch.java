@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class LinearSearch {
 
-	public static int Search(int[] arr, int no) {
+	public static int search(int[] arr, int no) {
 
 		int len = arr.length;
 		for (int i = 0; i < len; i++) {
@@ -54,7 +54,7 @@ public class LinearSearch {
 			System.exit(1);
 		}
 
-		int result = Search(arr, ele);
+		int result = search(arr, ele);
 		if (-1 != result) {
 			System.out.println("Element found at index " + result);
 		} else {
