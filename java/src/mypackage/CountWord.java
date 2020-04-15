@@ -13,7 +13,7 @@ public class CountWord {
 		// split string by spaces
 		String[] words = str.trim().split("\\s+");
 		
-		//System.out.println(words.length);
+		// System.out.println( words[0] + words.length );
 		
 		for (String word : words) {
 			if (mp.containsKey(word)) {
@@ -28,7 +28,7 @@ public class CountWord {
 
 		// display words and their counts
 		mp.forEach((key, value) -> System.out.printf("Word: %s, Count: %d\n", key, value));
-		System.out.println("Total number of words: " + mp.values());
+		System.out.println("Total number of words: " + words.length);
 
 	}
 
@@ -40,6 +40,7 @@ public class CountWord {
 		System.out.println("Enter a string");
 		str = sc.nextLine();
 
+		// System.out.print(str);
 		displayWordCount(str);
 
 		// close resources
