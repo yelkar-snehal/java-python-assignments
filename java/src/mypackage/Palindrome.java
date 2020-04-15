@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Palindrome {
 
-	public static boolean CheckPalindromeStr(String str, boolean ignoreCase) {
+	public static boolean checkPalindromeStr(String str, boolean ignoreCase) {
 		// if reversed and original strings are equal then
 		// given string is a palindrome
 
@@ -29,7 +29,7 @@ public class Palindrome {
 		str = sc.nextLine();
 
 		// demonstration of case insensitive check
-		if (CheckPalindromeStr(str, true)) {
+		if (checkPalindromeStr(str, true)) {
 			System.out.printf("Entered string '%s' is a palindrome", str);
 		} else {
 			System.out.printf("Entered string '%s' is not a palindrome", str);

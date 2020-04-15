@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class BinarySearch {
 
-	public static int Search(int[] arr, int no) {
+	public static int search(int[] arr, int no) {
 
 		// get start end and mid element to divide search
 		int len = arr.length;
@@ -73,7 +73,7 @@ public class BinarySearch {
 		// sort array in an ascending order to apply binary search
 		Arrays.sort(arr);
 
-		int result = Search(arr, ele);
+		int result = search(arr, ele);
 		if (-1 != result) {
 			System.out.println("Element found!");
 		} else {
