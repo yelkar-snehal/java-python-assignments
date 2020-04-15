@@ -1,6 +1,8 @@
 package mypackage;
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class BinarySearch {
 
@@ -34,17 +36,52 @@ public class BinarySearch {
 	}
 
 	public static void main(String[] args) {
-		int[] arr = { 12, 2, 4, 6, 8, 5 };
+		int n = 0, ele = 0;
+
+		// user input
+		Scanner sc = new Scanner(System.in);
+
+		System.out.println("Enter number of elemnts in the array");
+		try {
+			n = sc.nextInt();
+		} catch (InputMismatchException | NumberFormatException e) {
+			System.out.println("That's not a number!\nThis execption occured\n" + e);
+			System.exit(1);
+		}
+
+		int[] arr = new int[n];
+		// array init
+		for (int i = 0; i < n; i++) {
+			System.out.printf("Enter element %d: \n", i + 1);
+			try {
+				arr[i] = sc.nextInt();
+			} catch (InputMismatchException | NumberFormatException e) {
+				System.out.println("That's not a number!\nThis execption occured\n" + e);
+				System.exit(1);
+			}
+		}
+
+		// scan element to be searched
+		System.out.println("Enter element to be searched");
+		try {
+			ele = sc.nextInt();
+		} catch (InputMismatchException | NumberFormatException e) {
+			System.out.println("That's not a number!\nThis execption occured\n" + e);
+			System.exit(1);
+		}
 
 		// sort array in an ascending order to apply binary search
 		Arrays.sort(arr);
 
-		int result = Search(arr, 12);
+		int result = Search(arr, ele);
 		if (-1 != result) {
 			System.out.println("Element found!");
 		} else {
 			System.out.println("Element not found!");
 		}
+
+		// close resources
+		sc.close();
 
 	}
 
