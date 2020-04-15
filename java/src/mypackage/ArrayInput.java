@@ -30,9 +30,6 @@ public class ArrayInput {
 			}
 		}
 
-		// close resources
-		// sc.close();
-
 		return arr;
 	}
 
@@ -42,5 +39,6 @@ public class ArrayInput {
 			System.out.print(i + " ");
 		}
 		System.out.println();
+
 	}
 }
