@@ -1,12 +1,10 @@
 package mypackage;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class ReverseString {
 
-    public static String RevString(String str) {
+    public static String revString(String str) {
 
         String reversed = "";
 
@@ -18,15 +16,18 @@ public class ReverseString {
         return reversed;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         String str = "";
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Scanner sc = new Scanner(System.in);
         System.out.println("Enter a string");
-        str = br.readLine();
+        str = sc.nextLine();
 
-        System.out.printf("The reversed string is '%s'", RevString(str));
+        System.out.printf("The reversed string is '%s'", revString(str));
+
+        // close resources
+        sc.close();
     }
 
 }
