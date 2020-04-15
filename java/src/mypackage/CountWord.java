@@ -12,9 +12,15 @@ public class CountWord {
 		// remove leading trailing spaces by trim
 		// split string by spaces
 		String[] words = str.trim().split("\\s+");
-		
+
 		// System.out.println( words[0] + words.length );
-		
+
+		// only spaces are entered or empty string
+		if ((words[0].equals(""))) {
+			System.out.println("Invalid or empty string!");
+			return;
+		}
+
 		for (String word : words) {
 			if (mp.containsKey(word)) {
 				// check if word is already present
