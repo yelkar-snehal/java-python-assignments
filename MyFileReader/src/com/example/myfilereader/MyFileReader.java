@@ -1,6 +1,7 @@
 package com.example.myfilereader;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -23,6 +24,7 @@ public class MyFileReader {
 	}
 
 	public File[] getFiles() {
+		Arrays.sort(files);
 		return files;
 	}
 
