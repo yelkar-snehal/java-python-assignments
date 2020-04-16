@@ -9,12 +9,12 @@ class MyFileReader {
 	// class  variables common to most methods
 	File dirPath;
 	File[] files;
-	HashMap<String, Long> mp;
+	HashMap<Long, String> mp;
 	
 	// constructor to initialize path to directory
 	public MyFileReader(File dirPath) {
 		this.dirPath = dirPath;
-		mp = new HashMap<String, Long>();
+		mp = new HashMap<Long, String>();
 	}
 	
 	// sets the list of files including directories
@@ -43,7 +43,7 @@ class MyFileReader {
 				mapFiles(file);
 			}
 			else {
-				mp.put(file.getAbsolutePath() + " " + file.getName(), getFileSize(file));
+				mp.put(getFileSize(file), file.getAbsolutePath() + " " + file.getName());
 			}
 		}
 	}
@@ -60,29 +60,29 @@ class MyFileReader {
 				mapFiles(file);
 			}
 			else {
-				mp.put(file.getAbsolutePath() + " " + file.getName(), getFileSize(file));
+				mp.put(getFileSize(file), file.getAbsolutePath() + " " + file.getName());
 			}
 		}
 	}
 	
 	public void displayFiles() {
-		mp.forEach((file, s) -> System.out.println(file + " " + s));
+		mp.forEach((s, file) -> System.out.println(file + " " + s));
 	}
 	
 	public void displayFiles(boolean ascending) {
 		
-		TreeMap<String, Long> treeMap;
+		TreeMap<Long, String> treeMap;
 		if(ascending) {
-			treeMap = new TreeMap<String, Long>(mp);
+			treeMap = new TreeMap<Long, String>(mp);
 			System.out.println("Displaying files in ascending order...");
-			treeMap.forEach((file, s) -> System.out.println(file + " " + s));
+			treeMap.forEach((s, file) -> System.out.println(file + " " + s));
 		}
 		else {
 			// prints in reverse order of file size
-			treeMap = new TreeMap<String, Long>(Collections.reverseOrder());
+			treeMap = new TreeMap<Long, String>(Collections.reverseOrder());
 			treeMap.putAll(mp);
 			System.out.println("Displaying files in descending order...");
-			treeMap.forEach((file, s) -> System.out.println(file + " " + s));
+			treeMap.forEach((s, file) -> System.out.println(file + " " + s));
 		}
 	}
 	
