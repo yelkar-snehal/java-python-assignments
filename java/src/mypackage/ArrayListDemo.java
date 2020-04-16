@@ -14,7 +14,7 @@ class MyArrayList {
 		arrayList = new ArrayList<Integer>();
 	}
 
-	public ArrayList<Integer> setArrayList(Scanner sc) {
+	public void setArrayList(Scanner sc) {
 
 		for (int i = 0; i < n; i++) {
 			System.out.printf("Enter element %d: \n", i + 1);
@@ -25,8 +25,10 @@ class MyArrayList {
 				System.exit(1);
 			}
 		}
+	}
 
-		return arrayList;
+	public ArrayList<Integer> getArrayList() {
+		return this.arrayList;
 	}
 
 	public void displayArrayListWithFor() {
