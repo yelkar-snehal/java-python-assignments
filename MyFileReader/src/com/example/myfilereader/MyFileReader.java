@@ -1,6 +1,7 @@
 package com.example.myfilereader;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class MyFileReader {
 	// class variables common to most methods
@@ -131,6 +133,68 @@ public class MyFileReader {
 			sortedMap.forEach((file, s) -> System.out.println(file + " " + s));
 
 		}
+	}
+
+	public String getFileExtension(String name) {
+		String ext = "";
+
+		// ignore .files and files not having '.'
+		if (0 != name.lastIndexOf('.') && -1 != name.lastIndexOf('.')) {
+			// get string starting after .
+			ext = name.substring(name.lastIndexOf('.') + 1);
+		}
+
+		return ext;
+	}
+
+	public HashMap<String, Long> filterFiles(String ext) {
+		HashMap<String, Long> filteredFiles = new HashMap<String, Long>();
+
+		mp.forEach((file, s) -> {
+			String[] pathAndName = file.split(" ");
+			if (ext.equals(getFileExtension(pathAndName[1]))) {
+				filteredFiles.put(file, s);
+			}
+		});
+
+		// sort in ascending order
+		return getSortedFiles(filteredFiles);
+
+	}
+
+	public HashMap<String, ArrayList<Integer>> scanFiles(String word, String ext) {
+		HashMap<String, ArrayList<Integer>> scannedFiles = new HashMap<String, ArrayList<Integer>>();
+
+		HashMap<String, Long> filteredFiles = filterFiles(ext);
+
+		filteredFiles.forEach((file, s) -> {
+			String[] pathAndName = file.split(" ");
+
+			int count = 0;
+			Scanner sc;
+			try {
+				sc = new Scanner(new File(pathAndName[0]));
+				ArrayList<Integer> lineNumbers = new ArrayList<Integer>();
+
+				while (sc.hasNextLine()) {
+					count++;
+
+					if (sc.nextLine().contains(word)) {
+
+						lineNumbers.add(count);
+						scannedFiles.put(pathAndName[0], lineNumbers);
+
+					}
+
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		});
+
+		return scannedFiles;
 	}
 
 }
