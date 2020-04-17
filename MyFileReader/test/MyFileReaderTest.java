@@ -20,7 +20,7 @@ class MyFileReaderTest {
 
 	@BeforeEach
 	public void setUp() {
-		fileReaderObj = new MyFileReader(dirPath);
+
 		files = new File[2];
 
 		File a = new File(dirPath, "demo.txt");
@@ -42,6 +42,8 @@ class MyFileReaderTest {
 			}
 
 		}
+
+		fileReaderObj = new MyFileReader(dirPath);
 	}
 
 	@Test
@@ -58,6 +60,15 @@ class MyFileReaderTest {
 			// System.out.println(file);
 			assertEquals((file.length() / 1024), fileReaderObj.getFileSize(file));
 		}
+	}
+
+	@Test
+	public void testGetSortedFiles() {
+		// TreeMap<Long, String> treeMap = new TreeMap<Long, String>();
+		// this test case isn't final yet just testing mapFiles()
+		fileReaderObj.mapFiles();
+		// System.out.println(fileReaderObj.getSortedFiles(true).size());
+		fileReaderObj.displayFiles();
 	}
 
 }

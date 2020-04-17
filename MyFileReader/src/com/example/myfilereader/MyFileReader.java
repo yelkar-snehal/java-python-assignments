@@ -47,6 +47,7 @@ public class MyFileReader {
 		for (File file : files) {
 			if (file.isDirectory()) {
 				// recursive traverse directory
+				System.out.println("herre");
 				mapFiles(file);
 			} else {
 				mp.put(getFileSize(file), file.getAbsolutePath() + " " + file.getName());
@@ -54,7 +55,7 @@ public class MyFileReader {
 		}
 	}
 
-	private void mapFiles(File path) {
+	public void mapFiles(File path) {
 
 		// recursive call
 		setFiles(path);
@@ -65,31 +66,50 @@ public class MyFileReader {
 				// recursive traverse directory
 				mapFiles(file);
 			} else {
+				System.out.println("b" + file);
 				mp.put(getFileSize(file), file.getAbsolutePath() + " " + file.getName());
+				System.out.println("c" + mp.size());
+				mp.forEach((s, fil) -> System.out.println(fil + " " + s + "wqwqw"));
 			}
 		}
+		
+		//return mp;
+
 	}
 
 	public void displayFiles() {
+		System.out.println(mp.size());
 		if (0 != files.length) {
 			mp.forEach((s, file) -> System.out.println(file + " " + s));
 		}
 
 	}
 
+	public TreeMap<Long, String> getSortedFiles(boolean ascending) {
+		TreeMap<Long, String> treeMap = null;
+		if (0 != files.length) {
+			if (ascending) {
+				treeMap = new TreeMap<Long, String>(mp);
+			} else {
+				treeMap = new TreeMap<Long, String>(Collections.reverseOrder());
+				treeMap.putAll(mp);
+			}
+		}
+
+		return treeMap;
+	}
+
 	public void displayFiles(boolean ascending) {
 
 		if (0 != files.length) {
 
-			TreeMap<Long, String> treeMap;
+			TreeMap<Long, String> treeMap = getSortedFiles(ascending);
+
 			if (ascending) {
-				treeMap = new TreeMap<Long, String>(mp);
 				System.out.println("Displaying files in ascending order...");
 				treeMap.forEach((s, file) -> System.out.println(file + " " + s));
 			} else {
 				// prints in reverse order of file size
-				treeMap = new TreeMap<Long, String>(Collections.reverseOrder());
-				treeMap.putAll(mp);
 				System.out.println("Displaying files in descending order...");
 				treeMap.forEach((s, file) -> System.out.println(file + " " + s));
 			}
@@ -97,4 +117,3 @@ public class MyFileReader {
 	}
 
 }
-
