@@ -47,7 +47,6 @@ public class MyFileReader {
 		for (File file : files) {
 			if (file.isDirectory()) {
 				// recursive traverse directory
-				System.out.println("herre");
 				mapFiles(file);
 			} else {
 				mp.put(getFileSize(file), file.getAbsolutePath() + " " + file.getName());
@@ -66,14 +65,11 @@ public class MyFileReader {
 				// recursive traverse directory
 				mapFiles(file);
 			} else {
-				System.out.println("b" + file);
 				mp.put(getFileSize(file), file.getAbsolutePath() + " " + file.getName());
-				System.out.println("c" + mp.size());
-				mp.forEach((s, fil) -> System.out.println(fil + " " + s + "wqwqw"));
 			}
 		}
-		
-		//return mp;
+
+		// return mp;
 
 	}
 
