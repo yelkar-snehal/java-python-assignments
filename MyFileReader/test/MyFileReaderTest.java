@@ -1,74 +1,67 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
 import com.example.myfilereader.MyFileReader;
 
 class MyFileReaderTest {
 
-	@TempDir
 	public File dirPath;
 
 	public MyFileReader fileReaderObj;
-	public File[] files;
+	public ArrayList<File> files;
 
 	@BeforeEach
 	public void setUp() {
 
-		files = new File[2];
+		files = new ArrayList<File>();
+		dirPath = new File("/home/synerzip/Documents/demo");
+		File[] allFiles = { new File("/home/synerzip/Documents/demo/demo.txt"),
+				new File("/home/synerzip/Documents/demo/block.c"), new File("/home/synerzip/Documents/demo/mexe"),
+				new File("/home/synerzip/Documents/demo/csv/TestTakers.csv"),
+				new File("/home/synerzip/Documents/demo/csv/MarksScored.csv"),
+				new File("/home/synerzip/Documents/demo/csv/Analysis.csv") };
 
-		File a = new File(dirPath, "demo.txt");
-		try {
-			if (a.createNewFile())
-				files[0] = a;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		File b = new File(dirPath, "demoDir");
-		if (b.mkdir()) {
-			File c = new File(dirPath + File.separator + "demoDir", "demo2.txt");
-			File d = new File(dirPath + File.separator + "demoDir", "demo3.csv");
-			try {
-				if (c.createNewFile() && d.createNewFile())
-					files[1] = b;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-		}
-
+		Collections.addAll(files, allFiles);
+		Collections.sort(files);
 		fileReaderObj = new MyFileReader(dirPath);
+		fileReaderObj.mapFiles();
 	}
 
 	@Test
 	public void testGetFiles() {
 		fileReaderObj.setFiles(dirPath);
-		assertArrayEquals(files, fileReaderObj.getFiles());
+		assertEquals(files, fileReaderObj.getFiles());
 	}
 
 	// @ParameterizedTest
 	// @ValueSource(longs = {files[0].length(), files[1].length()})
 	@Test
-	public void testGetFileLengths() {
-		for (File file : files) {
-			// System.out.println(file);
-			assertEquals((file.length() / 1024), fileReaderObj.getFileSize(file));
-		}
+	public void testGetFileSizes() {
+		Long[] arrfileSizes = { (long) 14, (long) 97, (long) 6708, (long) 8304, (long) 14206, (long) 64517 };
+		ArrayList<Long> fileSizes = new ArrayList<Long>();
+		Collections.addAll(fileSizes, arrfileSizes);
+		assertEquals(fileSizes, fileReaderObj.getFileSizes());
 	}
 
 	@Test
 	public void testGetSortedFiles() {
-		// TreeMap<Long, String> treeMap = new TreeMap<Long, String>();
-		// this test case isn't final yet just testing mapFiles()
-		fileReaderObj.mapFiles();
-		// System.out.println(fileReaderObj.getSortedFiles(true).size());
-		fileReaderObj.displayFiles();
+		HashMap<String, Long> map = new HashMap<String, Long>();
+		map.put("/home/synerzip/Documents/demo/demo.txt demo.txt", (long) 14);
+		map.put("/home/synerzip/Documents/demo/block.c block.c", (long) 97);
+		map.put("/home/synerzip/Documents/demo/csv/MarksScored.csv MarksScored.csv", (long) 6708);
+		map.put("/home/synerzip/Documents/demo/mexe mexe", (long) 8304);
+		map.put("/home/synerzip/Documents/demo/csv/TestTakers.csv TestTakers.csv", (long) 14206);
+		map.put("/home/synerzip/Documents/demo/csv/Analysis.csv Analysis.csv", (long) 64517);
+
+		assertEquals(map, fileReaderObj.getSortedFiles(fileReaderObj.getMappedFiles()));
+
 	}
 
 }
