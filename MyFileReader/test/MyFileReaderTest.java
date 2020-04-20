@@ -2,6 +2,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -9,37 +10,37 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.example.myfilereader.MyFileReader;
+import com.example.myfilereader.MyFileScanner;
 
 class MyFileReaderTest {
 
-	public File dirPath;
+	private File dirPath;
 
-	public MyFileReader fileReaderObj;
-	public ArrayList<File> files;
+	private MyFileReader fileReaderObj;
+	private MyFileScanner fileScannerObj;
+	private ArrayList<File> files;
 
 	@BeforeEach
 	public void setUp() {
 
-		files = new ArrayList<File>();
 		dirPath = new File("/home/synerzip/Documents/demo");
 		// array all of files in dirPath includes nested
-		File[] allFiles = { new File("/home/synerzip/Documents/demo/demo.txt"),
+		files = new ArrayList<File>(Arrays.asList(new File("/home/synerzip/Documents/demo/demo.txt"),
 				new File("/home/synerzip/Documents/demo/block.c"), new File("/home/synerzip/Documents/demo/mexe"),
 				new File("/home/synerzip/Documents/demo/csv/TestTakers.csv"),
 				new File("/home/synerzip/Documents/demo/csv/MarksScored.csv"),
 				new File("/home/synerzip/Documents/demo/csv/Analysis.csv"),
-				new File("/home/synerzip/Documents/demo/csv/hello.txt") };
-
-		Collections.addAll(files, allFiles);
+				new File("/home/synerzip/Documents/demo/csv/hello.txt")));
 
 		// get sorted files to compare
 		Collections.sort(files);
 		fileReaderObj = new MyFileReader(dirPath);
-		fileReaderObj.mapFiles();
+		fileScannerObj = new MyFileScanner(dirPath);
 	}
 
 	@Test
 	public void testGetFiles() {
+		fileReaderObj.mapFiles();
 		fileReaderObj.setFiles(dirPath);
 		assertEquals(files, fileReaderObj.getFiles());
 	}
@@ -48,6 +49,7 @@ class MyFileReaderTest {
 	// @ValueSource(longs = {files[0].length(), files[1].length()})
 	@Test
 	public void testGetFileSizes() {
+		fileReaderObj.mapFiles();
 		Long[] arrfileSizes = { (long) 54, (long) 71, (long) 97, (long) 6708, (long) 8304, (long) 14206, (long) 64517 };
 		ArrayList<Long> fileSizes = new ArrayList<Long>();
 		Collections.addAll(fileSizes, arrfileSizes);
@@ -56,6 +58,7 @@ class MyFileReaderTest {
 
 	@Test
 	public void testGetSortedFiles() {
+		fileReaderObj.mapFiles();
 		// hashmap of sorted files by size
 		HashMap<String, Long> map = new HashMap<String, Long>();
 		map.put("/home/synerzip/Documents/demo/csv/hello.txt hello.txt", (long) 54);
@@ -72,16 +75,18 @@ class MyFileReaderTest {
 
 	@Test
 	public void testFilterFiles() {
+		fileReaderObj.mapFiles();
 		// hashmap of filtered files by provided extension
 		HashMap<String, Long> map = new HashMap<String, Long>();
 		map.put("/home/synerzip/Documents/demo/csv/hello.txt hello.txt", (long) 54);
 		map.put("/home/synerzip/Documents/demo/demo.txt demo.txt", (long) 71);
 
-		assertEquals(map, fileReaderObj.filterFiles("txt"));
+		assertEquals(map, fileScannerObj.filterFiles("txt"));
 	}
 
 	@Test
 	public void testScanFiles() {
+		fileReaderObj.mapFiles();
 		// hashmaps of scanned files for given extension and sequence
 		HashMap<String, ArrayList<Integer>> map = new HashMap<String, ArrayList<Integer>>();
 		ArrayList<Integer> lineNumbers1 = new ArrayList<Integer>();
@@ -98,7 +103,7 @@ class MyFileReaderTest {
 		map.put("/home/synerzip/Documents/demo/csv/hello.txt hello.txt 54", lineNumbers2);
 		map.put("/home/synerzip/Documents/demo/demo.txt demo.txt 71", lineNumbers1);
 
-		assertEquals(map, fileReaderObj.scanFiles("hello", "txt"));
+		assertEquals(map, fileScannerObj.scanFiles("hello", "txt"));
 	}
 
 }
